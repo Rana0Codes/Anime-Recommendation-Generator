@@ -41,7 +41,7 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/anime-recommendation-generator.git
+git clone https://github.com/Rana0Codes/anime-recommendation-generator.git
 ```
 
 2. Navigate to the project directory:
@@ -115,6 +115,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_twitter)
+Your Name - [@Rana0Codes](https://www.linkedin.com/in/juyel-rana/)
 
-Project Link: [https://github.com/your-username/anime-recommendation-generator](https://github.com/your-username/anime-recommendation-generator)
+Project Link: [https://github.com/Rana0Codes/anime-recommendation-generator](https://github.com/Rana0Codes/anime-recommendation-generator)
