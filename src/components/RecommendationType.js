@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { Box, Button, Paper } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import MovieFilterIcon from '@mui/icons-material/MovieFilter';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ApiSearch from './ApiSearch';
+import ManualInput from './ManualInput';
+import TemplateCard from './TemplateCard';
+import WeeklyRecommendations from './WeeklyRecommendations';
 
 const RecommendationType = ({ searchType }) => {
-  const [selectedType, setSelectedType] = useState(null);
+  const [selectedType, setSelectedType] = useState('single');
   const [selectedAnime, setSelectedAnime] = useState(null);
 
   const handleAnimeSelect = (animeData) => {
@@ -12,84 +17,69 @@ const RecommendationType = ({ searchType }) => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 3 }}>
+      {/* Type Switcher */}
+      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 4, flexWrap: 'wrap' }}>
         <Button
           variant={selectedType === 'single' ? 'contained' : 'outlined'}
-          onClick={() => setSelectedType('single')}
-          sx={{ minWidth: '200px' }}
+          onClick={() => {
+            setSelectedType('single');
+          }}
+          startIcon={<MovieFilterIcon />}
+          sx={{
+            minWidth: '220px',
+            py: 1.2,
+            borderRadius: 2.5,
+            fontWeight: 700,
+            textTransform: 'none',
+            fontSize: '0.95rem',
+            background: selectedType === 'single' ? 'linear-gradient(90deg, #6366f1, #8b5cf6)' : 'transparent',
+          }}
         >
           Single Recommendation
         </Button>
         <Button
           variant={selectedType === 'weekly' ? 'contained' : 'outlined'}
-          onClick={() => setSelectedType('weekly')}
-          sx={{ minWidth: '200px' }}
+          onClick={() => {
+            setSelectedType('weekly');
+          }}
+          startIcon={<CalendarMonthIcon />}
+          sx={{
+            minWidth: '220px',
+            py: 1.2,
+            borderRadius: 2.5,
+            fontWeight: 700,
+            textTransform: 'none',
+            fontSize: '0.95rem',
+            background: selectedType === 'weekly' ? 'linear-gradient(90deg, #ec4899, #f43f5e)' : 'transparent',
+          }}
         >
-          Weekly Recommendation
+          Weekly Top 3 Showcase
         </Button>
       </Box>
 
+      {/* Single Mode */}
       {selectedType === 'single' && (
         <Box>
-          <Paper elevation={3} sx={{ p: 3, mt: 2, mb: 4 }}>
-            {searchType === 'api' ? (
-              <ApiSearch onAnimeSelect={handleAnimeSelect} />
-            ) : (
-              <Box sx={{ textAlign: 'center', color: 'text.secondary' }}>
-                Manual input form coming soon...
-              </Box>
-            )}
-          </Paper>
-          
-          {selectedAnime && (
-            <Box sx={{ mt: 4 }}>
-              <Paper elevation={3} sx={{ p: 3 }}>
-                <Box sx={{ display: 'flex', gap: 3 }}>
-                  {/* Anime Cover */}
-                  <Box sx={{ flexShrink: 0 }}>
-                    <img
-                      src={selectedAnime.coverImage?.large || selectedAnime.coverImage?.medium}
-                      alt={selectedAnime.title}
-                      style={{
-                        width: '200px',
-                        height: '300px',
-                        objectFit: 'cover',
-                        borderRadius: '8px',
-                      }}
-                    />
-                  </Box>
-                  
-                  {/* Anime Details */}
-                  <Box sx={{ flex: 1 }}>
-                    <Box sx={{ fontSize: '24px', fontWeight: 'bold', mb: 2 }}>
-                      {selectedAnime.title}
-                    </Box>
-                    <Box sx={{ fontSize: '16px', color: 'text.secondary', mb: 2 }}>
-                      {selectedAnime.description?.replace(/<[^>]*>/g, '')}
-                    </Box>
-                    <Box sx={{ display: 'flex', gap: 3, color: 'text.secondary' }}>
-                      <Box>
-                        <strong>Rating:</strong> {selectedAnime.averageScore ? `${selectedAnime.averageScore}/100` : 'N/A'}
-                      </Box>
-                      <Box>
-                        <strong>Episodes:</strong> {selectedAnime.episodes || 'N/A'}
-                      </Box>
-                      <Box>
-                        <strong>Status:</strong> {selectedAnime.status || 'N/A'}
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              </Paper>
+          {selectedAnime ? (
+            <TemplateCard
+              anime={selectedAnime}
+              onBack={() => setSelectedAnime(null)}
+            />
+          ) : (
+            <Box>
+              {searchType === 'api' ? (
+                <ApiSearch onAnimeSelect={handleAnimeSelect} />
+              ) : (
+                <ManualInput onAnimeSelect={handleAnimeSelect} />
+              )}
             </Box>
           )}
         </Box>
       )}
 
+      {/* Weekly Mode */}
       {selectedType === 'weekly' && (
-        <Box sx={{ textAlign: 'center', color: 'text.secondary', mt: 4 }}>
-          Weekly recommendation feature coming soon...
-        </Box>
+        <WeeklyRecommendations />
       )}
     </Box>
   );

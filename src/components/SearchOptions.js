@@ -1,34 +1,48 @@
 import React, { useState } from 'react';
-import { Box, Button, Paper } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import RecommendationType from './RecommendationType';
 
 const SearchOptions = () => {
-  const [activeOption, setActiveOption] = useState(null);
+  const [activeOption, setActiveOption] = useState('api');
 
   return (
     <Box sx={{ mb: 4 }}>
+      {/* Source Switcher */}
       <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 3 }}>
         <Button
           variant={activeOption === 'api' ? 'contained' : 'outlined'}
           onClick={() => setActiveOption('api')}
-          sx={{ minWidth: '150px' }}
+          startIcon={<TravelExploreIcon />}
+          sx={{
+            minWidth: '170px',
+            borderRadius: 2,
+            fontWeight: 700,
+            textTransform: 'none',
+            borderColor: 'rgba(255, 255, 255, 0.2)',
+          }}
         >
-          API Search
+          AniList API Search
         </Button>
         <Button
           variant={activeOption === 'manual' ? 'contained' : 'outlined'}
           onClick={() => setActiveOption('manual')}
-          sx={{ minWidth: '150px' }}
+          startIcon={<EditNoteIcon />}
+          sx={{
+            minWidth: '170px',
+            borderRadius: 2,
+            fontWeight: 700,
+            textTransform: 'none',
+            borderColor: 'rgba(255, 255, 255, 0.2)',
+          }}
         >
-          Manual Input
+          Custom / Manual Entry
         </Button>
       </Box>
 
-      {activeOption && (
-        <Paper elevation={3} sx={{ p: 3 }}>
-          <RecommendationType searchType={activeOption} />
-        </Paper>
-      )}
+      {/* Main Content Area */}
+      <RecommendationType searchType={activeOption} />
     </Box>
   );
 };
