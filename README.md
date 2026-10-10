@@ -1,6 +1,6 @@
 # 🎌 Anime Recommendation Studio (v2.0)
 
-> **Create, customize, and export stunning 1920x1080 Full HD & social shareable anime recommendation posters powered by the AniList GraphQL API.**
+> **Interactive anime discovery engine and graphic generator powered by the AniList GraphQL API, with custom visual themes and 1-click 1920x1080 Full HD poster export.**
 
 [![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react&logoColor=black)](https://reactjs.org/)
 [![Material--UI](https://img.shields.io/badge/MUI-v5-007FFF?logo=mui&logoColor=white)](https://mui.com/)
@@ -10,48 +10,76 @@
 
 ---
 
-## ✨ Features
+## 🌟 Overview & Problem Solved
 
-### 🔍 1. AniList GraphQL API Search & Random Discovery
-- Instant search across thousands of anime titles with real-time autocompletion.
-- **Random Roulette**: Discover unexpected gems categorized by genre with a single click.
-- Rich metadata: English/Romaji titles, high-resolution cover & banner art, studio credits, episode count, broadcast status, genres, and community scores.
+Discovering new anime and sharing recommendations often suffers from information overload, scattered review links, and low-quality screenshots.
 
-### 🎨 2. 1920x1080 High-Res Shareable Template Generator
-- Generates beautiful, publication-ready cards with **1-click high-resolution PNG export** (`html2canvas`).
-- **Multiple Aspect Ratios**:
-  - `16:9 Banner` (1920x1080) — Ideal for Twitter/X headers, Discord, and Reddit.
-  - `9:16 Story / Reel` (1080x1920) — Ideal for Instagram Stories, TikTok, and YouTube Shorts.
-  - `1:1 Square` (1080x1080) — Ideal for Instagram feeds and community cards.
-- **4 Custom Visual Themes**:
-  - 🌌 **Cyberpunk Neon**: Deep night backdrop with cyan and magenta neon glow.
-  - 🖤 **Dark Onyx**: Modern dark minimalist aesthetic with teal accents.
-  - 🌸 **Sakura Night**: Dark floral violet with cherry blossom highlights.
-  - 🌅 **Sunset Synthwave**: Warm violet-orange gradient with retro synthwave energy.
-- **Personal Touch**: Add your custom reviewer notes, community rating stars, and custom curator handle (`@YourName`).
-- **Direct Clipboard Copy**: Copy generated graphics straight to your clipboard.
+**Anime Recommendation Studio (v2.0)** provides a focused discovery and presentation workflow:
+1. **Search & Discovery:** Instant lookup against AniList's catalog via GraphQL with autocompletion and random genre roulette.
+2. **Visual Presentation:** 4 curated design themes that transform anime metadata into publication-ready recommendation cards.
+3. **High-Resolution Export:** Client-side vector-to-canvas rendering generating **1920x1080 Full HD graphics** ready for Twitter/X, Discord, Instagram, and Reddit.
+4. **Weekly Curations:** Assemble a multi-title watchlist into a unified 3-slot showcase poster.
+
+---
+
+## ✨ Features & Capabilities
+
+### 🔍 1. AniList GraphQL Discovery Engine
+- **Instant Search:** Real-time autocompletion across thousands of anime titles with English, Romaji, and Native Japanese title matching.
+- **Random Roulette:** One-click serendipitous discovery filtered by specific genres (Action, Sci-Fi, Psychological, Fantasy, etc.).
+- **Rich Metadata:** Displays broadcast status, episode counts, release seasons, studio credits, genres, community ratings, and high-res cover art.
+
+### 🎨 2. 1920x1080 High-Resolution Poster Generator
+- **Multi-Ratio Output:**
+  - `16:9 Banner` (1920 × 1080 px) — Ideal for Twitter/X banners, Discord embeds, and desktop wallpapers.
+  - `9:16 Story / Reel` (1080 × 1920 px) — Tailored for Instagram Stories, TikTok, and YouTube Shorts.
+  - `1:1 Square` (1080 × 1080 px) — Standard format for Instagram feeds and social profile posts.
+- **4 Custom Visual Themes:**
+  - 🌌 **Cyberpunk Neon:** Deep space navy with electric cyan (#00f2fe) and neon magenta glow.
+  - 🖤 **Dark Onyx:** Minimalist charcoal backdrop with refined teal accents.
+  - 🌸 **Sakura Night:** Floral midnight violet with soft cherry blossom highlights.
+  - 🌅 **Sunset Synthwave:** Warm violet-to-orange gradient inspired by 80s retro aesthetics.
+- **Curator Customization:** Add personal reviewer ratings (1–10 stars), custom editorial notes, and personal curator handles (`@YourName`).
+- **One-Click Export:** Instant PNG file download or direct-to-clipboard image copying.
 
 ### 📅 3. Weekly Top 3 Recommendation Showcase
-- Curate a cohesive weekly watchlist across 3 categorized slots:
-  - 👑 `#1 MUST WATCH`
-  - 🔥 `#2 BINGE WORTHY`
-  - ✨ `#3 HIDDEN GEM`
-- Assemble 3 anime into a unified **1920x1080 Weekly Showcase Poster** with custom headline and curator branding.
+- Curate a cohesive watchlist across 3 distinct slots:
+  - 👑 `#1 MUST WATCH` (Lead priority title)
+  - 🔥 `#2 BINGE WORTHY` (High-engagement series)
+  - ✨ `#3 HIDDEN GEM` (Underrated discovery)
+- Assembles all three titles into a single, cohesive **1920 × 1080 Weekly Showcase Graphic**.
 
-### ✍️ 4. Custom & Manual Entry Mode
-- Recommend unlisted shows, upcoming releases, custom indie projects, or manga.
-- **Local File Upload**: Drag and drop any image from your computer with automatic base64 processing (guarantees 100% CORS-free high-res canvas exports).
-- Custom title, synopsis, studio, episode count, release year, and genre tags.
+### ✍️ 4. Manual Entry & Local Asset Mode
+- Add unlisted indie animations, upcoming releases, custom light novels, or manga.
+- **Drag-and-Drop Local Image Upload:** Supports local image selection with automatic client-side base64 conversion to bypass external CORS restrictions completely.
+
+---
+
+## 🏗️ Architecture & Network Behavior
+
+### 1. AniList GraphQL API Integration
+- **Endpoint:** `https://graphql.anilist.co`
+- **Method:** HTTP POST with structured GraphQL query payloads requesting filtered fields (`id`, `title`, `coverImage`, `bannerImage`, `genres`, `averageScore`, `studios`, `episodes`).
+- **Rate Limits:** AniList enforces an unauthenticated public rate limit of **90 requests per minute**. The application includes error boundaries and debounce mechanisms on search inputs to stay well within limits.
+
+### 2. Client-Side Export Engine & CORS Resilience
+- Graphic export utilizes `html2canvas` configured with explicit high-density scaling (`scale: 2` or fixed 1920x1080 render targets).
+- **CORS Mitigation:** External image CDNs (e.g., `s4.anilist.co`) can trigger browser canvas security taint when exported. The application provides two mitigations:
+  - Anonymous CORS attribute requests on loaded image elements.
+  - Local image upload mode with automatic base64 `data:` URI conversion, guaranteeing 100% reliable canvas serialization in any browser environment.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend Framework:** React 18
-- **UI & Design System:** Material-UI (MUI v5) + Emotion + Tailwind CSS
-- **API Integration:** AniList GraphQL API
-- **Export Engine:** `html2canvas` (with multi-ratio scale rendering & clipboard API)
-- **Icons:** `@mui/icons-material` & `react-icons`
+```text
+Frontend Framework │ React 18.2
+UI Components      │ Material-UI (MUI v5), Emotion
+Styling            │ Emotion CSS-in-JS, Tailwind CSS utility classes
+API Protocol       │ GraphQL (AniList public endpoint)
+Export Engine      │ html2canvas (multi-scale canvas rasterizer)
+Icons              │ @mui/icons-material, react-icons
+```
 
 ---
 
@@ -61,7 +89,7 @@
 - Node.js (v16.0.0 or higher)
 - npm (v8.0.0 or higher)
 
-### Installation
+### Installation & Local Execution
 
 1. **Clone the repository:**
    ```bash
@@ -78,9 +106,9 @@
    ```bash
    npm start
    ```
-   Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-4. **Build for production:**
+4. **Build production bundle:**
    ```bash
    npm run build
    ```
@@ -89,7 +117,7 @@
 
 ## 📁 Project Structure
 
-```
+```text
 Anime-Recommendation-Generator/
 ├── public/
 │   └── index.html
@@ -113,17 +141,18 @@ Anime-Recommendation-Generator/
 
 ---
 
-## 🤝 Contributing
+## ⚠️ Known Limitations & Device Requirements
 
-Contributions, issues, and feature requests are welcome! Feel free to check out the [issues page](https://github.com/Rana0Codes/Anime-Recommendation-Generator/issues).
+- **Canvas Rendering Fidelity:** `html2canvas` reconstructs the DOM using Canvas drawing primitives. Certain CSS properties (e.g., complex `backdrop-filter: blur()`) may render slightly differently across Chromium, Firefox, and WebKit engines.
+- **Mobile Export Constraints:** Generating 1920x1080 canvas buffers on memory-constrained mobile browsers may experience slight export latency (~1–2 seconds) compared to desktop.
+- **AniList Unauthenticated Quota:** Rapid continuous typing without debounce can temporarily trigger AniList HTTP 429 rate limit responses.
 
 ---
 
-## 👤 Author
+## 👤 Author & Maintainer
 
-- **Juyel Rana**
-- GitHub: [@Rana0Codes](https://github.com/Rana0Codes)
-- LinkedIn: [Juyel Rana](https://www.linkedin.com/in/juyel-rana/)
+- **Juyel Rana** ([@Rana0Codes](https://github.com/Rana0Codes))
+- LinkedIn: [linkedin.com/in/juyel-rana](https://www.linkedin.com/in/juyel-rana/)
 
 ---
 
