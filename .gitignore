@@ -22,4 +22,6 @@ yarn-error.log*
 
 # QA temporary artifacts
 qa_output/
+*.zip
+
 
