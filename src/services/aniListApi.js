@@ -259,3 +259,72 @@ export const searchAnimeFromJikan = async (searchTerm, limit = 10) => {
     return null;
   }
 };
+
+export const fetchTopWeeklyAnime = async () => {
+  const query = `
+    query {
+      Page(page: 1, perPage: 3) {
+        media(type: ANIME, sort: TRENDING_DESC, status_in: [RELEASING, FINISHED]) {
+          id
+          title {
+            userPreferred
+            english
+            romaji
+          }
+          description
+          coverImage {
+            extraLarge
+            large
+            medium
+            color
+          }
+          bannerImage
+          genres
+          averageScore
+          episodes
+          status
+          format
+          season
+          seasonYear
+          studios {
+            nodes {
+              name
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(ANILIST_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    const data = await response.json();
+    return (data.data?.Page?.media || []).map((anime) => ({
+      id: anime.id,
+      title: anime.title.userPreferred || anime.title.english || anime.title.romaji,
+      description: anime.description?.replace(/<[^>]*>/g, '') || '',
+      coverImage: anime.coverImage?.extraLarge || anime.coverImage?.large || anime.coverImage?.medium,
+      bannerImage: anime.bannerImage,
+      genres: anime.genres || [],
+      averageScore: anime.averageScore,
+      episodes: anime.episodes,
+      status: anime.status,
+      format: anime.format,
+      season: anime.season,
+      seasonYear: anime.seasonYear,
+      studios: anime.studios?.nodes?.map((s) => s.name) || [],
+    }));
+  } catch (error) {
+    console.error('Error fetching top weekly anime:', error);
+    throw error;
+  }
+};
+

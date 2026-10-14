@@ -2,6 +2,7 @@
   "name": "anime-recommendation-generator",
   "version": "2.0.0",
   "description": "Full-featured Anime Recommendation Studio with AniList GraphQL integration, custom reviews, and 1920x1080 exportable shareable poster templates",
+  "homepage": "https://Rana0Codes.github.io/Anime-Recommendation-Generator",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -12,6 +13,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.5",
+    "html-to-image": "^1.11.13",
     "html2canvas": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -43,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.13.0"
   }
 }
