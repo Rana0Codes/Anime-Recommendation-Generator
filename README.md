@@ -2,7 +2,7 @@
 
 > **Professional anime recommendation publishing suite designed for content creators. Search trending titles with AniList GraphQL or upload custom indie entries, design curated recommendation cards with responsive themes, and export lossless Full HD & 4K Ultra HD graphics tailored for Twitter/X, Instagram, Discord, and TikTok.**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-success?style=for-the-badge&logo=github)](https://rana0codes.github.io/Anime-Recommendation-Generator/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Online-success?style=for-the-badge&logo=cloudflare)](https://anime-recommendation-generator.rana0codes.workers.dev/)
 [![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
 [![Material--UI](https://img.shields.io/badge/MUI-v5-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
 [![AniList API](https://img.shields.io/badge/AniList-GraphQL_API-02A9FF?style=for-the-badge&logo=anilist&logoColor=white)](https://anilist.co/)
@@ -12,9 +12,9 @@
 
 ## 🌐 Live Demo
 
-The production application is deployed and publicly accessible on GitHub Pages:
+The production application is deployed, verified, and publicly accessible:
 
-👉 **[Open Anime Recommendation Generator](https://rana0codes.github.io/Anime-Recommendation-Generator/)**
+👉 **[Open Anime Recommendation Generator](https://anime-recommendation-generator.rana0codes.workers.dev/)**
 
 ---
 
@@ -145,18 +145,23 @@ The production application is deployed and publicly accessible on GitHub Pages:
 
 ## 🚢 Deployment Strategies
 
-### Option 1: GitHub Pages (Default & Configured)
-The repository includes an automated GitHub Actions deployment workflow at [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
-- On any push to the `main` branch, GitHub Actions builds the React application and deploys it to GitHub Pages.
-- **Repository Setting**: Ensure GitHub Pages is enabled in **Settings → Pages → Source → GitHub Actions**.
-- **Live URL**: `https://rana0codes.github.io/Anime-Recommendation-Generator/`
+### Live Production Deployment (Cloudflare)
+- **Status**: Live, verified, and operational.
+- **Production URL**: **[`https://anime-recommendation-generator.rana0codes.workers.dev/`](https://anime-recommendation-generator.rana0codes.workers.dev/)**
+- **Hosting Engine**: Cloudflare global edge network with instant asset distribution and SSL.
 
-### Option 2: Vercel (Edge & Serverless Support)
+### Alternative Hosting: Vercel (Edge & Serverless Support)
 ARG is fully configured for 1-click import on Vercel:
 - Includes [`api/image-proxy.js`](api/image-proxy.js) which automatically provisions a serverless reverse proxy on Vercel.
 - **Build Command**: `npm run build`
 - **Output Directory**: `build`
 - **Framework Preset**: Create React App
+- Configuration file: [`vercel.json`](vercel.json)
+
+### Alternative Hosting: GitHub Pages
+The repository includes an automated GitHub Actions deployment workflow at [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
+- On any push to the `main` branch, GitHub Actions builds the React application and deploys it to GitHub Pages.
+- **Repository Setting**: Ensure GitHub Pages is enabled in **Settings → Pages → Source → GitHub Actions**.
 
 ---
 
