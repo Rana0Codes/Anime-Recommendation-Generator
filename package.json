@@ -2,7 +2,7 @@
   "name": "anime-recommendation-generator",
   "version": "2.0.0",
   "description": "Full-featured Anime Recommendation Studio with AniList GraphQL integration, custom reviews, and 1920x1080 exportable shareable poster templates",
-  "homepage": "https://Rana0Codes.github.io/Anime-Recommendation-Generator",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
